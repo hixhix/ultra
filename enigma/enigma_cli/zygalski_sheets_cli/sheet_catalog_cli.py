@@ -1,4 +1,4 @@
-from zygalski_sheets.create_catalog import ZygalskiSheetCatalog
+from zygalski_sheets.create_catalog import ZygalskiSheetCatalog, CatalogError
 
 
 
@@ -17,14 +17,20 @@ class SheetCatalogCli:
         catalog_generator = ZygalskiSheetCatalog()
 
         if args["make_catalog"]:
-            status = catalog_generator.make_catalog()
-            print(status)
-        elif args["check_catalog"]:
-            exists = catalog_generator.check_catalog()
-            if exists:
-                print("Zygalski sheet catalog exists.")
+            try:
+                catalog_generator.check_catalog()
+            except CatalogError as e:
+                catalog_generator.make_catalog()
             else:
-                print("Zygalski sheet catalog does not exist.")
+                print("Catalog already exists.")
+        elif args["check_catalog"]:
+            try:
+                catalog_generator.check_catalog()
+            except CatalogError as e:
+                print(e)
+                print("Catalog may be corrupted. Recommended remaking the catalog.")
+            else:
+                print("Catalog exists and is valid.")
         elif args["force_catalog"]:
             menu_str = (f"Enter a number to select an option.\n"
                         f"1. To create the zygalski catalog.\n"
@@ -34,7 +40,7 @@ class SheetCatalogCli:
                 inpt = input(menu_str)
 
                 if inpt == "1":
-                    catalog_generator.force_make_catalog()                    
+                    catalog_generator.make_catalog()                    
                 elif inpt =="2":
                     break
                 else:
