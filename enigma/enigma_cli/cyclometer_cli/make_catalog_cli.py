@@ -1,4 +1,4 @@
-from cyclometer.make_catalog import Cyclometer
+from cyclometer.make_catalog import Cyclometer, CatalogError
 
 
 class MakeCatalogCli:
@@ -16,14 +16,35 @@ class MakeCatalogCli:
         """
         cyclometer = Cyclometer()
 
-        print(args)
-
         if args["make_catalog"]:
-            cyclometer.make_cyclometer_catalogs()
+            try:
+                cyclometer.check_catalog()
+            except CatalogError as e:
+                cyclometer.make_cyclometer_catalogs()
+            else:
+                print("Catalog already exists.")
         elif args["check_catalog"]:
-            cyclometer.check_cyclometer_catalog_exists()
+            try:
+                cyclometer.check_catalog()
+            except CatalogError as e:
+                print(e)
+                print("Catalog may be corrupted. Recommended remaking the catalog.")
+            else:
+                print("Catalog exists and is valid.")
         elif args["force_catalog"]:
-            cyclometer.make_cyclometer_catalogs()
+            menu_str = (f"Enter a number to select an option.\n"
+                        f"1. To create the zygalski catalog.\n"
+                        f"2. Quit.\n")
+            
+            while True:
+                inpt = input(menu_str)
+
+                if inpt == "1":
+                    cyclometer.make_cyclometer_catalogs()                    
+                elif inpt =="2":
+                    break
+                else:
+                    print("Invalid input!. Try again.")
 
     def _add_parser_arguments(self):
         """

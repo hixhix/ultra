@@ -1,8 +1,16 @@
+from hashlib import sha256
 from enigma_tools.setting_tools.setting_tools import RotorSettings, scrambler_perms
 from enigma_core.factory import make_machine
 from collections import deque
+import shutil
 import json
 import os
+
+
+class CatalogError(Exception):
+
+    def __init__(self, err_msg):
+        super().__init__(err_msg)
 
 
 class Cyclometer:
@@ -17,15 +25,78 @@ class Cyclometer:
         self._machine_obj2 = None
         self._permutations = None
         self._rotor_settings = RotorSettings('L', 3)
+        self._machines = ["WEHRMACHT early","WEHRMACHT late"]
 
     def make_cyclometer_catalogs(self):
         """
         
         """
-        machines = ["WEHRMACHT early","WEHRMACHT late"]
+        dir = os.path.dirname(__file__)
 
-        for machine in machines:
+        dir = os.path.join(dir, "cyclometer_catalog")
+
+        if os.path.isdir(dir):
+            shutil.rmtree(dir)
+
+        for machine in self._machines:
             self._make_cyclometer_catalog(machine)
+
+        hash = self._catalog_hash()
+
+        hash_fpath = os.path.join(dir, "hash_value.txt")
+
+        with open(hash_fpath, "w") as f:
+            f.write(hash) 
+
+    def check_catalog(self):
+        """
+        
+        """
+        # check all files exist
+        dir = os.path.dirname(__file__)
+
+        dir = os.path.join(dir, "cyclometer_catalog")
+
+        if not os.path.isdir(dir):
+            raise CatalogError(f"{dir} does not exist.")
+
+        for machine_type in self._machines:
+            machine_dir = os.path.join(dir, machine_type.replace(" ","_"))
+
+            if not os.path.isdir(machine_dir):
+                raise CatalogError(f"{machine_dir} does not exist.")
+
+            perms = self._make_perms(machine_type)
+
+            for perm in perms:
+
+                dname = f"{perm.REF}_{perm.RS}_{perm.RM}_{perm.RF}"
+                dpath = os.path.join(machine_dir, dname)
+            
+                for l in self.LETTERS:
+                    fname = f"{l}_{perm.REF}_{perm.RS}_{perm.RM}_{perm.RF}.json"
+
+                    fpath = os.path.join(dpath, fname)
+
+                    if not os.path.isfile(fpath):
+                        raise CatalogError(f"{fpath} does not exist.")
+                    
+        hash = self._catalog_hash()
+
+        hash_fpath = os.path.join(dir, "hash_value.txt")
+
+        if not os.path.isfile(hash_fpath):
+            raise CatalogError(f"{hash_fpath} does not exist.")
+
+        with open(hash_fpath, "r") as f:
+            valid_hash = f.read()
+
+        valid_hash = valid_hash.strip()
+
+        if hash != valid_hash:
+            raise CatalogError(f"Inconsistant hash value for catalog.")
+
+        return True
 
     def _make_cyclometer_catalog(self, machine_type):
         """
@@ -270,6 +341,21 @@ class Cyclometer:
         self._machine_obj1 = make_machine(self._machine_type)
         self._machine_obj2 = make_machine(self._machine_type)
 
+    def _make_perms(self, machine_type):
+        """
+        
+        """
+        machine = make_machine(machine_type)
+
+        collection = machine.scrambler.collection.collection_dict()
+        rotors_static = collection["ROTORS_STATIC"]
+        rotors_dynamic = collection["ROTORS_DYNAMIC"]
+        reflectors = collection["REFLECTORS"]
+
+        perms = scrambler_perms(reflectors, rotors_dynamic, rotors_static)
+
+        return perms
+
     def _make_permutations(self):
         """
         
@@ -279,3 +365,48 @@ class Cyclometer:
         rotors_dynamic = collection_dict["ROTORS_DYNAMIC"]
         self._permutations = scrambler_perms(reflectors, rotors_dynamic, [])
 
+    def _catalog_hash(self):
+        """
+        
+        """
+        hash_str = ""
+
+        dir = os.path.dirname(__file__)
+
+        dir = os.path.join(dir, "cyclometer_catalog")
+
+        if not os.path.isdir(dir):
+            raise CatalogError(f"{dir} does not exist")
+        
+        for machine_type in self._machines:
+            machine_dir = os.path.join(dir, machine_type.replace(" ","_"))
+
+            if not os.path.isdir(machine_dir):
+                raise CatalogError(f"{machine_dir} does not exist")
+            
+            perms = self._make_perms(machine_type)
+
+            for perm in perms:
+
+                dname = f"{perm.REF}_{perm.RS}_{perm.RM}_{perm.RF}"
+                dpath = os.path.join(machine_dir, dname)
+            
+                for l in self.LETTERS:
+                    fname = f"{l}_{perm.REF}_{perm.RS}_{perm.RM}_{perm.RF}.json"
+
+                    fpath = os.path.join(dpath, fname)
+
+                    if not os.path.isfile(fpath):
+                        raise CatalogError(f"{fpath} does not exist")
+                    
+                    else:
+                        with open(fpath, "r") as f:
+                            data = f.read()
+
+                            hash = sha256(data.encode("utf-8")).hexdigest()
+
+                            hash_str += hash
+
+        hash = sha256(hash_str.encode("utf-8")).hexdigest()
+                    
+        return hash
