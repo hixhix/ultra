@@ -52,7 +52,7 @@ class CommandLineEnigmaCli:
 
     def _valid_machine_type(self, args):
         """
-        
+
         """
         machine = args['machine']
         try:
@@ -69,7 +69,7 @@ class CommandLineEnigmaCli:
 
     def _valid_reflector(self, args):
         """
-        
+
         """
         reflector = args['reflector']
         try:
@@ -82,7 +82,7 @@ class CommandLineEnigmaCli:
 
     def _valid_rotor_types(self, args):
         """
-        
+
         """
         rotor_types_str = args['rotors']
         try:
@@ -92,10 +92,10 @@ class CommandLineEnigmaCli:
         else:
             self._rotor_types = rotor_types
             return rotor_types
-        
+
     def _valid_ring_settings(self, args):
         """
-        
+
         """
         ring_settings_str = args['rng_settings']
         if ring_settings_str:
@@ -109,7 +109,7 @@ class CommandLineEnigmaCli:
 
     def _valid_rotor_settings(self, args):
         """
-        
+
         """
         rotor_settings_str = args['rot_settings']
         if rotor_settings_str:
@@ -123,7 +123,7 @@ class CommandLineEnigmaCli:
 
     def _valid_plugboard_settings(self, args):
         """
-        
+
         """
         conns = None
 
@@ -144,7 +144,7 @@ class CommandLineEnigmaCli:
 
     def _valid_input_file(self, args):
         """
-        
+
         """
         input_file = args['input-file']
         if input_file:
@@ -154,7 +154,7 @@ class CommandLineEnigmaCli:
 
     def _valid_output_file(self, args):
         """
-        
+
         """
         output_file = args['output_file']
         if output_file:
@@ -165,7 +165,7 @@ class CommandLineEnigmaCli:
 
     def _read_input_file(self, args):
         """
-        
+
         """
         output_file = args["input-file"]
 
@@ -174,7 +174,7 @@ class CommandLineEnigmaCli:
 
     def _get_machine_output(self, args):
         """
-        
+
         """
         settings = self._make_settings_dict()
         machine_obj = make_machine(self._machine_type)
@@ -196,7 +196,7 @@ class CommandLineEnigmaCli:
 
     def _make_settings_dict(self):
         """
-        
+
         """
         settings = {
             "MACHINE_TYPE":self._machine_type,
@@ -222,17 +222,17 @@ class CommandLineEnigmaCli:
                 settings["PLUGBOARD_SETTINGS"]["UHR_BOX_SETTING"] = 0
 
         return settings
-    
+
     def _load_machine_data(self):
         machines = machine_list()
-        
+
         for machine in machines:
             machine_obj = make_machine(machine)
             self._machine_data[machine] = machine_obj.scrambler.collection.collection_dict()
 
     def _add_parser_arguments(self):
         """
-        
+
         """
         self._add_machine_arg()
         self._add_scrambler_char_arg()
@@ -276,7 +276,7 @@ class CommandLineEnigmaCli:
             reflectors = self._machine_data[machine]["REFLECTORS"]
             reflector_str = " | ".join(reflectors)
             reflector_strs[machine] = f"( {reflector_str} )"
- 
+
         ref_strs = "\n"
         for machine, ref_str in reflector_strs.items():
             ref_strs += f"{machine}".ljust(25, ' ')
@@ -298,7 +298,7 @@ class CommandLineEnigmaCli:
             rotors_dynamic_str = ", ".join(rotors_dynamic)
             rotor_strs[machine] = (f"( {rotors_static_str} )".ljust(17, ' ') 
 	                         + f" [{rotors_dynamic_str}]")
- 
+
         rot_strs = "\n"
         for machine, rot_str in rotor_strs.items():
             rot_strs += f"{machine}".ljust(25, ' ')
@@ -322,7 +322,7 @@ class CommandLineEnigmaCli:
 
     def _add_rotor_settings_arg(self):
         self._parser.add_argument(
-            '--rot-settings', 
+            '--rot-settings',
             type=str,
             help='Rotor settings in format [R4,RS,RM,RF] or [RS,RM,RF]')
 
@@ -330,7 +330,7 @@ class CommandLineEnigmaCli:
         self._parser.add_argument(
             '-pc',
             '--plugboard-charset',
-            type=self.valid_plugboard_char_flag, 
+            type=self.valid_plugboard_char_flag,
             help=f'Plugboard character set ( L | N ) where\n'
                  f'L = Letters\n'
                  f'N = Numbers')
@@ -338,7 +338,7 @@ class CommandLineEnigmaCli:
     def _add_plugboard_mode_arg(self):
         self._parser.add_argument(
             '--plugboard-mode',
-            type=self.valid_plugboard_mode, 
+            type=self.valid_plugboard_mode,
             help=f'Plugboard mode ( S | U ) where\n'
                  f'S = Stecker\n'
                  f'U = Uhr Box')
@@ -354,7 +354,7 @@ class CommandLineEnigmaCli:
             '--plugboard-connections',
             type=str,
             help=f'Plugboard settings for stecker mode\n'
-                 f'in format [AB,CD,EF,GH,IJ,KL,M,N,O,P,QR,ST] letters mode\n'
+                 f'in format [AB,CD,EF,GH,IJ,KL,MN,OP,QR,ST] letters mode\n'
                  f'in format [1 2,3 4,5 6,7 8,9 10,11 12,13,14,15 16,17,18,19 20] numbers mode\n'
                  f'Plugboard settings for uhr box mode\n'
                  f'in format "A=[A,B,C,D,E,F,G,H,I,J] '
@@ -382,7 +382,7 @@ class CommandLineEnigmaCli:
             return v
         else:
             raise argparse.ArgumentError("'L' or 'N' expected")
-            
+
     def valid_scrambler_mode(self, v):
         mode = None
         if isinstance(v, bool):
@@ -395,7 +395,7 @@ class CommandLineEnigmaCli:
             raise argparse.ArgumentTypeError('Boolean value expected')
         self._scrambler_mode = mode
         return mode
-    
+
     def valid_plugboard_char_flag(self, v):
         if v.upper() in ["L","N"]:
             v = v.upper()
@@ -403,14 +403,14 @@ class CommandLineEnigmaCli:
             return v
         else:
             raise argparse.ArgumentError("'L' or 'N' expected")
-    
+
     def valid_plugboard_mode(self, v):
         if v.upper() in ["S","U"]:
             v = v.upper()
             return v
         else:
             raise argparse.ArgumentError("'S' or 'U' expected")
-        
+
     def valid_uhr_box_setting(self, v):
         v = int(v)
         if v in range(40):

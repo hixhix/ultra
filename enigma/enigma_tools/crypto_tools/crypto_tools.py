@@ -70,7 +70,7 @@ def index_of_coincidence(text):
     count = 0
 
     ioc = 0
-        
+
     d = {c:{"number":0, "ioc":0.0} for c in chars}
 
     for char in text:
@@ -87,7 +87,7 @@ def index_of_coincidence(text):
             _ioc = 0
         d[char]["ioc"] = _ioc
         ioc += _ioc
-        
+
     normalized_ioc = ioc * 26
 
     return count, ioc, normalized_ioc

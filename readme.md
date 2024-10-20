@@ -55,8 +55,15 @@ Enter a number to select a machine.
 ### Enigma Cli Simulator Menu
 To see the enigma simulator menu run python enigma_cli.py enigma_simulator -h
 ```
-usage: enigma_cli.py enigma_simulator [-h] [-sc SCRAMBLER_CHARSET] [--scrambler-mode SCRAMBLER_MODE] [--rng-settings RNG_SETTINGS] [--rot-settings ROT_SETTINGS] [-pc PLUGBOARD_CHARSET]
-                                      [--plugboard-mode PLUGBOARD_MODE] [--uhr-box-setting UHR_BOX_SETTING] [--plugboard-connections PLUGBOARD_CONNECTIONS] [-o OUTPUT_FILE]
+usage: enigma_cli.py enigma_simulator [-h] [-sc SCRAMBLER_CHARSET] 
+                                      [--scrambler-mode SCRAMBLER_MODE] 
+                                      [--rng-settings RNG_SETTINGS] 
+                                      [--rot-settings ROT_SETTINGS] 
+                                      [-pc PLUGBOARD_CHARSET]
+                                      [--plugboard-mode PLUGBOARD_MODE] 
+                                      [--uhr-box-setting UHR_BOX_SETTING] 
+                                      [--plugboard-connections PLUGBOARD_CONNECTIONS] 
+                                      [-o OUTPUT_FILE]
                                       machine reflector rotors input-file
 
 positional arguments:
@@ -151,7 +158,8 @@ optional arguments:
 ### Zygalski Sheets Menu
 To see the zygalski sheets menu run python enigma_cli.py zygalski_sheets -h
 ```
-usage: enigma_cli.py zygalski_sheets [-h] {indicators,permutation_filter,group_indicators,ceaser_cipher_shift,zygalski_sheet,sheet_solution,zygalski_catalog} ...
+usage: enigma_cli.py zygalski_sheets [-h] {indicators,permutation_filter,group_indicators,
+ceaser_cipher_shift,zygalski_sheet,sheet_solution,zygalski_catalog} ...
 
 positional arguments:
   {indicators,permutation_filter,group_indicators,ceaser_cipher_shift,zygalski_sheet,sheet_solution,zygalski_catalog}
@@ -257,7 +265,8 @@ python enigma_cli.py enigma_simulator -h
 ```
 
 ```
-python enigma_cli.py enigma_simulator "WEHRMACHT early" UKW-A "III,II,I" my_file.txt -sc N --rng-settings "01,02,03" --rot-settings "04,05,06" 
+python enigma_cli.py enigma_simulator "WEHRMACHT early" UKW-A "III,II,I" 
+my_file.txt -sc N --rng-settings "01,02,03" --rot-settings "04,05,06" 
 -pc L --plugboard-mode S --plugboard-connections "AB,CD,EF,GH,IJ,KL"
 ```
 
@@ -279,7 +288,8 @@ slow rotor, II for the middle rotor and I for the fast rotor. We will use the uh
 developed for the airforce but it is available with every enigma machine simulated here.
 
 ```
-python enigma_cli.py enigma_simulator "Luftwaffe" UKW-B "III,II,I" test_message.txt -sc N --rng-settings "01,02,03" --rot-settings "04,05,06" -pc L --plugboard-mode U --plugboard-connections "A=[A,B,C,D,E,F,G,H,I,J] B=[K,L,M,N,O,P,Q,R,S,T]" --uhr-box-setting 31
+python enigma_cli.py enigma_simulator "Luftwaffe" UKW-B "III,II,I" test_message.txt -sc N --rng-settings "01,02,03" 
+--rot-settings "04,05,06" -pc L --plugboard-mode U --plugboard-connections "A=[A,B,C,D,E,F,G,H,I,J] B=[K,L,M,N,O,P,Q,R,S,T]" --uhr-box-setting 31
 ```
 
 ### Code Sheets Worked Example
@@ -575,12 +585,419 @@ UKW-A_III_II_I     XXX
 
 ### Zygalski Sheets Worked Example
 
+#### Create an indicators file to use to create a Zygalski sheet solution
+
+First in the zygalski_sheet menu go to the indicators menu and look at the help option
+```
+python enigma_cli.py zygalski_sheets indicators generate_indicators -h 
+```
+
+```
+usage: enigma_cli.py zygalski_sheets indicators generate_indicators [-h] [-f] machine_type reflector rotor_types ring_settings plugboard_settings number
+
+positional arguments:
+  machine_type        Machine type "WEHRMACHT early" or "WEHRMACHT late"
+  reflector           WEHRMACHT early ( UKW-A )
+                      WEHRMACHT late ( UKW-B | UKW-C )
+  rotor_types         WEHRMACHT early ( I | II | III )
+                      WEHRMACHT late ( I | II | III | IV | V )
+  ring_settings       Ring settings A-Z in format                           "RS,RM,RF"
+  plugboard_settings  plugboard settings in format                          "AB,CD,EF,GH,IJ,KL,M,N,O,P,QR,ST"
+  number              number of indicators                                  INTEGER
+
+optional arguments:
+  -h, --help          show this help message and exit
+  -f                  creates days first settings that contain Herivel tips
+```
+
+In order to create an indicators file an enigma machine type and all of its settings must be entered.
+
+```
+python3 enigma_cli.py zygalski_sheets indicators generate_indicators "WEHRMACHT early" UKW-A "III II I" "D,E,F" "AB,CD,EF,GH,IJ,KL,MN,OP" 400
+```
+
+```
+FMK QPANCR
+BDL CSKFHV
+WBL HDINEF
+FNY ZBUOWX
+ZQK FDHFGV
+YYA WYEXQQ
+YGA FTYNDO
+PNT PBDQAT
+PHY CCMGDO
+VJQ HMKCER
+FWU KNQYQJ
+EIF XLJAHT
+LPJ XLMLFA
+```
+
+Filter an indicators file for usefull indicators.
+
+```
+usage: enigma_cli.py zygalski_sheets indicators filter_indicators [-h] [-u] indicators_file
+
+positional arguments:
+  indicators_file       indicators file path
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -u, --unique_slow_rotors
+                        return indicators with unique slow rotor characters
+```
+
+```
+python3 enigma_cli.py zygalski_sheets indicators filter_indicators indicators.txt
+```
+
+```
+ZNY ZRQNRI
+JAP XYTYYD
+MJD BXRYYR
+KAF JCVJWN
+QEJ LIPUIZ
+NIO EBDKXD
+YVU UZNRCN
+ZSX FOKWOJ
+DRN HFVPFW
+IHV CIEBIQ
+WHJ ZZJBZN
+ARQ ZARGAD
+XRU XBWQBD
+OMF UBJUMP
+WCN BXKEEK
+```
+
+#### Herivel square example
+
+```
+python3 enigma_cli.py zygalski_sheets herivel_square indicators.txt
+```
+
+```
+            SLOW ROTOR          
+    ABCDEFGHIJKLMNOPQRSTUVWXYZ  
+    ||||||||||||||||||||||||||  
+  A-EG CHIIC   J             F-A
+  B-DFSGFJD     R         L  F-B
+  C-CDDECAGB         KO      J-C
+  D-FGEIDICHJ  Q    XT    P  G-D
+  E-HFGEEDFGIP N            DZ-E
+  F-KGHFEIE    M Q T      J  J-F
+  G-GBBFHCDF      UY   S      -G
+M H-FIIF DF  A K E  F       OF-H
+I I-EBRIXIDE  X    O C    MV E-I
+D J-J B   AA    M M        D B-J
+D K-                   T      -K
+L L-     H          S      X  -L
+E M-   F   O   I C    L   ES  -M
+  N-             F            -N
+R O-T         J     W L       -O
+O P-               TY         -P
+T Q-C     O    Q     L  Q A   -Q
+O R-    K   C   W     N J     -R
+R S-  JD           A          -S
+  T-                          -T
+  U-           F              -U
+  V-         H             E  -V
+  W-        D  F       A      -W
+  X-     E  U           B  B  -X
+  Y-     W   Q       Q  V Q   -Y
+  Z- J   FN       VDM         -Z
+    ||||||||||||||||||||||||||  
+    ABCDEFGHIJKLMNOPQRSTUVWXYZ
+```
+
+#### Ceaser cipher shift
+```
+python3 enigma_cli.py zygalski_sheets ceaser_cipher_shift -h
+```
+
+```
+usage: enigma_cli.py zygalski_sheets ceaser_cipher_shift [-h] (-e | -d) Characters string
+
+positional arguments:
+  Characters string  Characters to perform a ceaser cipher shift on
+
+optional arguments:
+  -h, --help         show this help message and exit
+  -e, --encrypt      Encrypt ceaser cipher shift
+  -d, --decrypt      Decrypt ceaser cipher shift shift
+```
+
+```
+python3 enigma_cli.py zygalski_sheets ceaser_cipher_shift "bletchley" -e
+```
+
+```
+CHARACTER STRING BLETCHLEY
+
+CEASER SHIFT A BLETCHLEY
+CEASER SHIFT B CMFUDIMFZ
+CEASER SHIFT C DNGVEJNGA
+CEASER SHIFT D EOHWFKOHB
+CEASER SHIFT E FPIXGLPIC
+CEASER SHIFT F GQJYHMQJD
+CEASER SHIFT G HRKZINRKE
+CEASER SHIFT H ISLAJOSLF
+CEASER SHIFT I JTMBKPTMG
+CEASER SHIFT J KUNCLQUNH
+CEASER SHIFT K LVODMRVOI
+CEASER SHIFT L MWPENSWPJ
+CEASER SHIFT M NXQFOTXQK
+CEASER SHIFT N OYRGPUYRL
+CEASER SHIFT O PZSHQVZSM
+CEASER SHIFT P QATIRWATN
+CEASER SHIFT Q RBUJSXBUO
+CEASER SHIFT R SCVKTYCVP
+CEASER SHIFT S TDWLUZDWQ
+CEASER SHIFT T UEXMVAEXR
+CEASER SHIFT U VFYNWBFYS
+CEASER SHIFT V WGZOXCGZT
+CEASER SHIFT W XHAPYDHAU
+CEASER SHIFT X YIBQZEIBV
+CEASER SHIFT Y ZJCRAFJCW
+CEASER SHIFT Z AKDSBGKDX
+```
+
+```
+python3 enigma_cli.py zygalski_sheets ceaser_cipher_shift "OYRGPUYRL" -d
+```
+
+```
+CHARACTER STRING OYRGPUYRL
+
+CEASER SHIFT A OYRGPUYRL
+CEASER SHIFT B NXQFOTXQK
+CEASER SHIFT C MWPENSWPJ
+CEASER SHIFT D LVODMRVOI
+CEASER SHIFT E KUNCLQUNH
+CEASER SHIFT F JTMBKPTMG
+CEASER SHIFT G ISLAJOSLF
+CEASER SHIFT H HRKZINRKE
+CEASER SHIFT I GQJYHMQJD
+CEASER SHIFT J FPIXGLPIC
+CEASER SHIFT K EOHWFKOHB
+CEASER SHIFT L DNGVEJNGA
+CEASER SHIFT M CMFUDIMFZ
+CEASER SHIFT N BLETCHLEY
+CEASER SHIFT O AKDSBGKDX
+CEASER SHIFT P ZJCRAFJCW
+CEASER SHIFT Q YIBQZEIBV
+CEASER SHIFT R XHAPYDHAU
+CEASER SHIFT S WGZOXCGZT
+CEASER SHIFT T VFYNWBFYS
+CEASER SHIFT U UEXMVAEXR
+CEASER SHIFT V TDWLUZDWQ
+CEASER SHIFT W SCVKTYCVP
+CEASER SHIFT X RBUJSXBUO
+CEASER SHIFT Y QATIRWATN
+CEASER SHIFT Z PZSHQVZSM
+```
+
+#### Make zygalski sheets
+
+```
+python3 enigma_cli.py zygalski_sheets zygalski_sheet -h
+```
+
+```
+python3 enigma_cli.py zygalski_sheets zygalski_sheet svg_sheet -h
+```
+
+```
+usage: enigma_cli.py zygalski_sheets zygalski_sheet svg_sheet [-h] [-s] machine_type permutation
+
+positional arguments:
+  machine_type  Machine type "WEHRMACHT early" or "WEHRMACHT late"
+  permutation   provide a permutation in form 'A_UKW-B_III_II_I'. returns svg zygalski sheets.
+
+optional arguments:
+  -h, --help    show this help message and exit
+  -s, --short   will return a single quadrant of the zygalski sheet
+```
+
+```
+python3 enigma_cli.py zygalski_sheets zygalski_sheet svg_sheet "WEHRMACHT early" "A_UKW-A_III_II_I"
+```
+
+```
+A_UKW-A_III_II_I_G1.svg
+A_UKW-A_III_II_I_G2.svg
+A_UKW-A_III_II_I_G3.svg
+```
+
+```
+usage: enigma_cli.py zygalski_sheets zygalski_sheet text_sheet [-h] [--groups GROUPS] (-l | -n) machine_type permutation
+
+positional arguments:
+  machine_type     Machine type "WEHRMACHT early" or "WEHRMACHT late"
+  permutation      provide a permutation in form 'A_UKW-B_III_II_I'. returns a text zygalski sheet.
+
+optional arguments:
+  -h, --help       show this help message and exit
+  --groups GROUPS  enter the groups of females you want '1,2,3'. defaults to all groups.
+  -l               alpha output
+  -n               numeric output
+```
+
+```
+python3 enigma_cli.py zygalski_sheets zygalski_sheet text_sheet "WEHRMACHT early" "A_UKW-A_III_II_I" -l
+```
+
+```
+                WEHRMACHT early
+
+                 REFLECTOR          ROTORS      
+POSITIONS                       -RS-  -RM-  -RF- 
+TYPES              UKW-A        III    II    I   
+ROTOR SETTINGS                   A     --    --  
+RING SETTINGS                    A     A     A   
+
+
+  A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+  | | | | | | | | | | | | | | | | | | | | | | | | | | 
+A-0 0 0 0 0 0 0 4 2 5 6 7 7 3 1 4 6 2 5 2 5 6 7 3 1 0-A
+B-6 7 7 3 5 2 1 0 0 4 2 5 6 3 1 4 6 3 1 0 4 2 5 2 1 4-B
+C-3 5 2 5 2 5 2 5 6 3 1 0 4 6 3 1 0 3 5 6 3 5 2 1 4 6-C
+D-6 3 1 0 0 4 6 3 1 4 2 1 4 2 1 4 2 0 0 0 0 0 4 2 1 4-D
+E-4 6 3 1 4 6 7 3 1 0 4 2 1 0 0 0 2 5 6 3 5 2 1 0 0 0-E
+F-2 1 0 0 0 0 0 4 6 3 1 4 6 3 5 6 3 0 0 4 2 1 0 0 0 4-F
+G-1 4 2 5 2 1 0 0 0 4 2 1 0 0 4 2 1 1 0 0 0 0 0 4 6 3-G
+H-5 6 7 3 5 6 7 3 1 0 4 2 1 0 4 6 3 0 0 0 0 0 4 2 5 2-H
+I-5 2 1 0 0 0 4 6 3 5 2 1 0 0 0 4 2 1 0 0 4 6 3 5 6 3-I
+J-6 3 1 0 0 0 0 4 2 1 0 0 0 0 4 6 7 1 4 6 7 7 7 3 1 4-J
+K-6 3 1 0 0 0 0 4 6 3 5 6 3 1 0 4 6 7 7 3 5 6 3 1 0 4-K
+L-2 1 4 2 1 0 0 4 6 3 5 6 7 3 1 4 6 3 1 0 0 0 4 6 3 5-L
+M-2 1 0 0 0 0 0 0 4 2 5 2 1 0 4 6 3 3 5 2 5 2 1 4 2 5-M
+N-4 2 1 4 6 7 3 1 0 0 0 0 4 2 1 4 6 1 0 4 2 1 0 0 0 0-N
+O-3 1 0 0 0 0 0 0 4 2 1 0 4 2 1 0 4 7 3 1 4 2 5 2 5 6-O
+P-4 6 7 3 1 4 6 3 1 4 2 1 4 6 3 1 0 6 7 7 3 5 2 1 0 0-P
+Q-4 2 1 0 0 0 0 0 0 4 6 7 7 3 5 6 3 4 2 1 4 2 1 0 0 0-Q
+R-0 4 6 3 5 2 1 0 0 0 0 0 4 2 5 2 1 1 4 2 5 2 1 4 2 1-R
+S-2 5 6 3 1 0 0 0 4 2 1 0 4 6 3 1 4 0 0 4 2 1 0 4 2 5-S
+T-5 2 1 0 4 2 1 4 6 3 1 0 0 0 4 6 3 6 7 7 7 3 1 0 4 2-T
+U-7 3 1 4 6 3 1 0 4 6 3 1 0 0 0 4 2 1 4 2 5 2 1 0 4 6-U
+V-6 3 1 0 0 0 4 6 3 1 0 0 4 2 1 4 6 5 2 5 6 3 1 0 0 4-V
+W-0 0 0 0 0 0 4 2 1 0 0 0 0 4 6 7 3 7 7 3 1 0 4 2 1 0-W
+X-0 0 4 2 5 2 1 0 4 6 7 3 5 2 1 0 0 1 0 0 0 0 4 6 3 1-X
+Y-4 2 5 2 1 0 4 6 3 1 0 4 6 3 5 2 1 0 4 6 7 3 1 0 0 0-Y
+Z-0 0 0 4 6 3 1 0 0 0 0 0 4 6 3 1 4 4 6 3 1 0 0 4 2 1-Z
+  | | | | | | | | | | | | | | | | | | | | | | | | | | 
+  A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+
+RM RF G1                  G2                  G3
+
+A  A
+A  B
+A  C
+A  D
+A  E
+A  F
+A  G
+A  H                                          V,Z                 
+A  I                      V,Z                                     
+A  J  V,Z                                     J,K                 
+A  K                      J,K                 B,W                 
+A  L  J,K                 B,W                 G,V                 
+A  M  B,W                 G,V                 F,H                 
+A  N  G,V                 F,H                                     
+A  O  F,H                                                         
+A  P                                          E,P                 
+A  Q                      E,P                 P,R                 
+A  R                      B,Q M,R                                 
+A  S  B,Q M,R                                 B,D                 
+A  T                      B,D                                     
+A  U  B,D                                     V,W                 
+A  V                      V,W                 H,L                 
+A  W  V,W                 H,L                 C,F                 
+A  X  H,L                 C,F                                     
+A  Y  C,F                                                         
+A  Z
+.........
+```
+
+#### Make zygalski sheet catalog
+
+```
+python3 enigma_cli.py zygalski_sheets zygalski_catalog -h
+```
+
+```
+usage: enigma_cli.py zygalski_sheets zygalski_catalog [-h] (-m | -c | -f)
+
+optional arguments:
+  -h, --help           show this help message and exit
+  -m, --make-catalog   Make catalog
+  -c, --check-catalog  Check catalog exists
+  -f, --force-catalog  Force make catalog
+```
+
+```
+python3 enigma_cli.py zygalski_sheets zygalski_catalog -m
+```
+
+```
+python3 enigma_cli.py zygalski_sheets zygalski_catalog -c
+```
+
+```
+python3 enigma_cli.py zygalski_sheets zygalski_catalog -f
+```
 
 ### Bombe Machine Worked Example
 
+```
+python3 enigma_cli.py bombe_machine -h
+```
 
-### Herivel Square Example
+```
+usage: enigma_cli.py bombe_machine [-h] {bombe_machine,filter_cribs} ...
 
+positional arguments:
+  {bombe_machine,filter_cribs}
+    bombe_machine       Run the bombe machine
+    filter_cribs        Filter cribs from cipher text using provided plain text
+
+optional arguments:
+  -h, --help            show this help message and exit
+```
+
+```
+python3 enigma_cli.py bombe_machine bombe_machine -h
+```
+
+```
+usage: enigma_cli.py bombe_machine bombe_machine [-h] (-w | -k | -K) [-c] [-d] plain_text cipher_text permutations
+
+positional arguments:
+  plain_text    The assumed plain text
+  cipher_text   The cipher text
+  permutations  The scrambler permutation file
+
+optional arguments:
+  -h, --help    show this help message and exit
+  -w            Runs a Turing Welchman bombe
+  -k            Runs a Kriegsmarine M3 naval bombe
+  -K            Runs a Kriegsmarine M4 naval bombe
+  -c            Enables consecutive stecker knockout
+  -d            Disables the diagonal board
+```
+
+```
+python3 enigma_cli.py bombe_machine filter_cribs -h
+```
+
+```
+usage: enigma_cli.py bombe_machine filter_cribs [-h] cipher_text_filepath plain_text
+
+positional arguments:
+  cipher_text_filepath  The cipher text
+  plain_text            The plain text to find the cribs
+
+optional arguments:
+  -h, --help            show this help message and exit
+```
 
 ### Ring Setting optomizer Worked Example
 

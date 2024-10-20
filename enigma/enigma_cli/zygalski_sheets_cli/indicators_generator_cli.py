@@ -77,7 +77,7 @@ class IndicatorsGeneratorCli:
                            f"WEHRMACHT late ( {' | '.join(self._wehrmacht_late_data['ROTORS_DYNAMIC'])} )\n")
         generate_traffic.add_argument('rotor_types', type=self._valid_rotor_types, help=rotor_types_str)
         generate_traffic.add_argument('ring_settings', type=self._valid_ring_settings, help=f'Ring settings A-Z in format{" "*27}"RS,RM,RF"')
-        generate_traffic.add_argument('plugboard_settings', type=self._valid_plugboard_settings, help=f'plugboard settings in format{" "*26}"AB,CD,EF,GH,IJ,KL,M,N,O,P,QR,ST"')
+        generate_traffic.add_argument('plugboard_settings', type=self._valid_plugboard_settings, help=f'plugboard settings in format{" "*26}"AB,CD,EF,GH,IJ,KL,MN,OP,QR,ST"')
         generate_traffic.add_argument('number', type=int, help=f'number of indicators{" "*34}INTEGER')
         generate_traffic.add_argument('-f',action='store_true',help='creates days first settings that contain Herivel tips')
 

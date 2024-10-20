@@ -22,7 +22,7 @@ class ZygalskiSheetsCli:
 
     def process_args(self, args):
         """
-        
+
         """
         if args['sheets'] == 'indicators':
             self._indicators_generator_cli.process_args(args)
@@ -47,7 +47,7 @@ class ZygalskiSheetsCli:
 
     def _add_sub_parsers(self):
         """
-        
+
         """
         subparsers = self.parser.add_subparsers(dest='sheets')
         subparsers.required = True

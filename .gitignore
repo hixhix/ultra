@@ -1,3 +1,4 @@
 enigma/cyclometer/cyclometer_catalog/
 enigma/zygalski_sheets/zygalski_catalog/
 *.pyc
+*.swp
