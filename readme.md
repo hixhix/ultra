@@ -546,6 +546,101 @@ python enigma_cli.py code_sheets "Kriegsmarine M4" L N S
   Z = KE   Z = ET   Z = ZQ   Z = EP   Z = CL   Z = VD   Z = FJ   Z = MY   Z = XS   Z = LX   Z = IR   Z = QJ   Z = XH 
 ```
 
+##### Kriegsmarine M4 Enigma Encryption Procedure
+
+1. Select a DAY and MSG ID. For example DAY 31 and MSG ID MPV.
+
+2. Set the Reflector type and Rotor types. Ensure the fourth Rotor is set to a ring setting of 'A'. Set the remaining rotors to the ring settings CXO.
+
+3. Set the Rotor Settings for DAY 31 ENTW.
+
+4. Set the Plugboard Settings for DAY 31 19/5 12/9 16/23 22/25 17/1 21/10 24/2 11/8 3/26 20/13.
+
+5. Select a random trigram VRM.
+
+6. Type the above trigram into the enigma machine and record the output KKZ.
+
+7. Set the conventional rotors to KKZ. Dont change the fourth rotor setting.
+
+8. Write down the message indicator trigram and add a random letter in front of it (L)MPV..
+
+9. Write down the trigram from step 5 and add a random letter to the end of it VRM(Q).
+
+10. Write the two quadgrams on top of each other.
+
+    LMPV
+    VRMQ
+
+11. Get letter pairs.
+
+    LV MR PM VQ
+
+12. Use the bigram tables to encrypt the letter pairs.
+
+    LV=DP MR=FK PM=JA VQ=ZM
+
+13. Combine the encrypted letters as follows.
+
+    DPFK JAZM
+
+14. Create the message header.
+
+    BRU 2130 27 001 24
+
+    BRU = any three letters
+    2130 = 24 hour time GMT
+    27 = date
+    001 = tracking numbers
+    24 = number of four letter blocks in the message
+
+15. Message format.
+
+    DPFK JAZM .... .... .... .... message body .... .... .... .... DPFK JAZM
+
+16. Send mesage.
+
+
+##### Kriegsmarine M4 Enigma Encryption Procedure
+
+1. Extract the first two four letter groups from the begining and end of the message.
+
+    DPFK JAZM
+
+2. Regroup the letters as follows.
+
+    DP FK JA ZM
+
+3. Convert using bigram tables.
+
+    DP=LV  FK=MR  JA=PM  ZM=VQ
+
+4. Write out the decrypted pairs.
+
+    LV MR PM VQ
+
+5. Rewrite the pairs as follows.
+
+    LV MR PM VQ
+    || || || ||
+    L| M| P| V|
+     V  R  M  Q
+
+6. Write down LMPV but drop the L.
+
+    MPV
+
+7. Write down VRMQ.
+
+    VRMQ
+
+8. Use the trigram MPV to look up the key indicator in the code sheet.
+
+9. Set up the enigma machine according to the code sheet.
+
+10. Type in the quadgram VRMQ which will output KKZW.
+
+11. Set the conventional rotors to KKZ. Dont change the fourth rotor setting.
+
 ### Cyclometer Worked Example
 
 ```
