@@ -1,5 +1,32 @@
 # Cyclometer Catalog
 
+Settings that generated following double enciphered message keys
+
+Machine WEHRMACHT early
+Reflector Type UKW-A
+Rotor Types III II I
+Rotor Settings ABC
+Ring Settings DEF
+Plugboard Settings AB,CD,EF,GH,IJ,KL
+
+```
+WYAYQZ	BLPSDD	GBQGEU	ARRKHG	CSXNOX	JKOWLS	OFWEWR	BMKSAP	JFCWWO	WLOYDS
+WUHYZI	UCROSG	KODRCN	XYFHQM	VOKBCP	IWULMH	BACSVO	BANSVE	FSETOV	PGRDTG
+KGERTV	KLSRDQ	SMUPAH	OHPEGD	FDOTIS	VZRBXG	AIAKJZ	WPXYYX	ZIHXJI	CABNVA
+VPSBYQ	UXIOPL	NGRUTG	VAIBVL	DDLVIW	OWEEMV	AKOKLS	IMBLAA	UZDOXN	LOBCCA
+AESKNQ	TMVJAT	EOLICW	ZUDXZN	EIZIJK	VEABNZ	FCNTSE	ROHZCI	OSLEOW	UJTOFF
+SZAPXZ	PLBDDA	XGLHTW	ICILSL	LLCCDO	DNJVBC	GOWGCR	JOPWCD	SPVPYT	UPQOYU
+TIZJJK	TPOJYS	BXCSPO	CFGNWJ	JWDWMN	PQKDRP	MRXAHX	VICBJO	NCRUSG	NVMUKB
+KFKRWP	BYQSQU	CTONUS	QSPQOD	JVRWKG	MSQAOU	EBUIEH	EAHIVI	IIALJZ	TATJVF
+YGFFTM	MDAAIZ	HOLMCW	WXTYPF	YCLFSW	JOIWCL	LANCVE	JNPWBD	HWWMMR	IVNLKE
+HAGMVJ	BGDSTN	REIZNL	MPCAYO	EMPIAD	YKUFLH	CJSNFQ	OMNEAE	VJABFZ	EKZILK
+VIVBJT	JSDWON	WDKYIP	NLMUDB	OKBELA	ZJYXFY	RGIZTL	KEMRNB	YIXFJX	FSMTOB
+KJVRFT	MCGASJ	HCZMSK	VDOBIS	RZNZXE	CDANIZ	XDVHIT	NTYUUY	UMQOAU	HDZMIK
+DPRVYG	PMPDAD	XAWHVR	SFSPWQ	JEOWNS	ERGIHJ	TZAJXZ	UKHOLI	KTKRUP	QUXQZX
+OYJEQC	OZMEXB	MHSAGQ	YZRFXG	TBFJEM	SOWPCR	QTYQUY	FPSTYQ	KOJRCC	TYUJQH
+MQFARM	FPFTYM	BDOSIS	MVPAKD	RXNZPE	XDDHIN	OUAEZZ	KBSREQ	WRZYHK	SIHPJI
+```
+
 When an operator is setting up a Wehrmacht Enigma Machine they must create a random three letter message key.
 The machine procedure requires that the operator double encipher the message key. For example the ground settings
 in the key sheet is FQY every operator sets the Rotor Settings to FQY. Each operator then creates there own random 
@@ -22,124 +49,116 @@ CYCLE 1
 
 ABCDEFGHIJKLMNOPQRSTUVWXYZ
 
-ANJKBC
-KHLRGW
-RAPZVD
-ZUGXZJ
-XNKHBP
-HDNMIE
-MPCAYO
+AESKNQ
+KGERTV
+REIZNL
+ZUDXZN
+XGLHTW
+HAGMVJ
+MQFARM
 
-AKRZXHMA
-
+AKRZXHM
 
 CYCLE 2
 
 ABCDEFGHIJKLMNOPQRSTUVWXYZ
 -      -  - -    -     - -
 
-BXFSPM
-SQWPRR
-PLRDDG
-DNHVBI
-VYHBQI
+BLPSDD
+SZAPXZ
+PLBDDA
+DPRVYG
+VAIBVL
 
-BSPDVB
-
+BSPDV
 
 CYCLE 3
 
 ABCDEFGHIJKLMNOPQRSTUVWXYZ
 -- -   -  - -  - --  - - -
 
-CSJNOC
-NSOUOS
-UWROMG
-OLOEDS
-EBPIED
-IBHLEI
-LEQCNU
+CTONUS
+NGRUTG
+UCROSG
+OYJEQC
+EOLICW
+ICILSL
+LANCVE
 
-CNUOEILC
-
+CNUOEIL
 
 CYCLE 4
 
 ABCDEFGHIJKLMNOPQRSTUVWXYZ
 -----  -- ------ -- -- - -
 
-FYITQL
-TPDJYN
-JBGWEJ
-WPNYYE
-YJDFFN
+FPFTYM
+TIZJJK
+JSDWON
+WYAYQZ
+YGFFTM
 
-FTJWYF
-
+FTJWY
 
 CYCLE 5
 
 ABCDEFGHIJKLMNOPQRSTUVWXYZ
 ------ --------- ---------
 
-GASGVQ
+GBQGEU
 
-GG
-
+G
 
 CYCLE 6
 
 ABCDEFGHIJKLMNOPQRSTUVWXYZ
 ---------------- ---------
 
-QQBQRA
+QSPQOD
 
-QQ
-
+Q
 
 CYCLE 7
 
 ABCDEFGHIJKLMNOPQRSTUVWXYZ
 --------------------------
 
+The cycles of letters for Group 1 G1 are as follows.
+
 G1 (AKRZXHM)(BSPDV)(CNUOEIL)(FTJWY)(G)(Q)
+
+Convert the cycle strings to the number of letters in each cycle.
 
 G1 (7)(5)(7)(5)(1)(1)
 
+Order the cycle lengths in descending order.
+
 G1 (7)(7)(5)(5)(1)(1)
+
+Using the method above to solve for all three Cycle Groups G1,G2 and G3.
+
+G1 (7)(7)(5)(5)(1)(1) G2 (10)(10)(3)(3) G3 (12)(12)(1)(1)
 ```
 
 
 
 ## Creating the Cyclometer Catalog Sudo Code
 
-Settings that generated following double enciphered message keys
+A Cyclometer Catalog will be created for each Reflector Type and Rotor Wheel Order.
+In each Cyclometer Catalog there will be an entry for each Rotor Ground Setting in the range 'AAA' to 'ZZZ' and the three Cycle Groups G1,G2,G3.
 
-Machine WEHRMACHT early
-Reflector Type UKW-A
-Rotor Types III II I
-Rotor Settings ABC
-Ring Settings DEF
-Plugboard Settings AB,CD,EF,GH,IJ,KL
+The Enigma Machine will have its Reflector Type and Rotor Wheel Order set.
+There will be no plugboard settings as the letter swapping performed by the plugboard does not effect numbers in the Cycle Groups.
+For each Rotor Ground Setting every possible Message Key in the range 'AAA' to 'ZZZ' will be input twice to produce a Double Enciphered Message Key.
+After each Message Key is input the Enigma Machine will be reset to the same Rotor Ground Setting.
+The turnover functionality of the Enigma Machine should be disabled such that only the Fast Rotor can turnover.
+This is to ensure that the Cyclometer Catalog will not be influenced by the effect of the Middle Rotor turning over.
+The length of the Double Enciphered Message Key is only six letters and so it is unlikely that the Middle Rotor would have turned over when the message key was typed in to the Enigma Machine.
+When all of the Double Enciphered Message Keys have been generated for all possible Message Keys in the range 'AAA' to 'ZZZ' the cycles will be solved for G1,G2 and G3 using the same method shown above.
+Below is an example of some entries in a Cyclometer Catalog.
 
 ```
-LFMCWB	EPQIYU	CMDNAN	DDEVIV	JBGWEJ	GIYGJY	SGQPTU	ILCLDO	KQMRRB	CRINHL
-CSJNOC	OLOEDS	XGXHTX	HDNMIE	APBKYA	DNOVBS	SCWPSR	DRJVHC	EFVIWT	LURCZG
-XNKHBP	IBHLEI	SQWPRR	QFXQWX	QORQCG	BTPSUD	GDMGIB	TPDJYN	CWSNMQ	ZIXXJX
-BXFSPM	PDLDIW	NWPUMD	VRWBHR	SYEPQV	UWROMG	UBXOEX	NKIULL	PDFDIM	VNDBBN
-WPNYYE	DNHVBI	YAOFVS	GVCGKO	BEVSNT	SHOPGS	ZUXXZX	UBJOEC	LIQCJU	UYOOQS
-EBPIED	VYHBQI	ZUGXZJ	ANJKBC	RAPZVD	MTDAUN	UNLOBW	KVIRKL	MSMAOB	WRGYHJ
-NSOUOS	BJYSFY	IWJLMC	HTFMUM	XFJHWC	MCPASD	KDCRIO	RFXZWX	CAVNVT	YJDFFN
-QQBQRA	MTMAUB	MSCAOO	GASGVQ	QAXQVX	QUBQZA	QGRQTG	QDOQIS	SEGPNJ	QKGQLJ
-MPCAYO	PLRDDG	MDDAIN	HPAMYZ	AVXKKX	FYITQL	SQUPRH	SYSPQQ	KHLRGW	EFCIWO
-LEQCNU	EGSITQ	MZWAXR	DHJVGC	PQWDRR	KKVRLT	QBYQEY	DASVVQ	JOFWCM	DCPVSD
+AAA G1 (6)(6)(5)(5)(2)(2)	G2 (13)(13)		G3 (11)(11)(2)(2)
+AAB G1 (13)(13)			G2 (11)(11)(2)(2)	G3 (5)(5)(4)(4)(4)(4)
+AAC G1 (11)(11)(2)(2)		G2 (5)(5)(4)(4)(4)(4)	G3 (5)(5)(4)(4)(4)(4)
 ```
-
-For a double enciphered message key ABCDEF
-
-Group 1 (G1) is A,D at position 1,4
-Group 2 (G2) is B,E at position 2,5
-Group 3 (G3) is C,F at position 3,6
-
-Two Enigma Machines Enigma A and Enigma B are used to create the Cyclometer Catalog. 
-Enigma B will be three steps ahead of Enigma A because the second character in each group is three positions ahead of the first character in that group.
