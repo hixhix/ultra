@@ -36,7 +36,13 @@ The recieving operator sets up the Wehrmacht Enigma Machine according to the key
 The recieving operator then sets the Rotor Settings to the three letter indicator and then decipher the double enciphered message key.
 The recieving operator then sets the Rotor Settings to the message key and then decipher the message.
 
-Listening stations would collect the message indicators and the code breakers in the polish cipher bureau divided the double enciphered message key into three groups G1,G2,G3 where G1 is position 1,4, G2 is position 2,5 and G3 is position 3,6.
+Listening stations would collect the message indicators. 
+The code breakers in the polish cipher bureau divided the double enciphered message key into three groups G1,G2,G3. 
+G1 is position 1,4, G2 is position 2,5 and G3 is position 3,6. 
+The code breakers noticed that some of the groups had repeated letters.
+For example the message indicator KQZ GVWZVH is made up of the three letter indicator KQZ followed by the six letter double enciphered message key which can be broken into the three groups G1,G2,G3.
+GVWZVH -> G1(G,Z) G2(V,V) G3(W,H).
+Group G2 contains the repeated letter V,V.
 
 ```
 KQZ GVWZVH
