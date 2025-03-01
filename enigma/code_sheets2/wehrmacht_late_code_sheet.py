@@ -1,5 +1,16 @@
+"""
 
-LUFTWAFFE ENCRYPTION/DECRYPTION PROCEDURES
+
+WEHRMACHT ENIGMA (LATE)
+
+ Date | UKW | Walzenlage | Ringstellung | Grundstellung |      Steckerverbindungen      |   Kenngruppen   |
+------|-----|------------|--------------|---------------|-------------------------------|-----------------|
+      |     |            |              |               |                               |                 |
+  31. |  C  | I  II  V   | 10  14  02   |  12  19  17   | BF SD AY HG OU QC WI RL XP ZK | YQV VUC XXO GVF |
+------|-----|------------|--------------|---------------|-------------------------------|-----------------|
+
+
+WEHRMACHT LATE ENCRYPTION/DECRYPTION PROCEDURES
 
 1940 -> 31 October 1944
 
@@ -137,36 +148,4 @@ DECRYPTION PROCEDURE
 06. Excluding the first five characters of the message which is the two random characters
     and three character kengruppen decrypt the rest of the message. The kengruppen can be
     used to confirm the key sheets daily settings that where used to send the message.
-
-
-MESSAGE CONSTRUCTION EXAMPLES
-
-ACCORDING TO CODE BREAKERS HINSLEY & STRIP
-
-
-PJ7 to SF9 and 5KQ              -> call signs
-1030                            -> time of origin
-53                              -> number of letters
-JCM                             -> indicator settings
-
-xxJEU                           -> discriminant (xx any 2 characters) from kenngruppen
-TNUFDQ                          -> cyphered message setting
-
-WQSEU PMPIZ TLJJU WQEHG LRBID
-FEWBO JIEPD JAZHT TBJRO AHHYO
-JYG
-
-
-ACCORDING TO THE HUT 6 STORY WELCHMAN
-
-PJ7 to SF9 and 5KQ              -> call signs
-1030                            -> time of origin
-53                              -> number of letters
-part 2 of 4                     -> single/multi-part
-JEU                             -> discriminant from kenngruppen
-JCM                             -> indicator setting
-
-TNUFDQ                          -> message setting
-WQSEU PMPIZ TLJJU WQEHG LRBID
-FEWBO JIEPD JAZHT TBJRO AHHYO
-JYG
+"""

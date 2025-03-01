@@ -1,3 +1,12 @@
+"""
+
+
+KRIEGSMARINE M3 ENIGMA CODE SHEET
+
+ Date | Walzenlage | Ringstellung |      Steckerverbindungen      |   Kenngruppen   |
+------|------------|--------------|-------------------------------|-----------------|
+ 31.  | I II III   |  10  14  02  | BF SD AY HG OU QC WI RL XP ZK | YQV VUC XXO GVF |
+
 
 KRIEGSMARINE M3 ENCRYPTION/DECRYPTION PROCEDURES
 
@@ -29,9 +38,4 @@ DECRYPTION PROCEDURE
 04. Set the machines rotor settings to the message key.
 
 05. Decrypt the message portion of the recieved text.
-
-
-The Kriegsmarine M3 code sheets had commonality with the air force and army so they could also communicate.
-
-The UKW-D Reflector was introduced in January 1944 and a variant was used with the Naval Enigma. It was used as an 
-alternative to Reflectors UKW-B and UKW-C.
+"""

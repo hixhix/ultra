@@ -89,7 +89,7 @@ class ScramblerPermutations:
                 #if perm_str != "UKW-B_I_IV_III":
                 #    continue
 
-                lets = deque(self.LETTERS)
+                lets = deque(self.LETTERS) # for ceaser cipher shift on rs
                 for i in range(26):
                     lets.rotate(1)
 
@@ -100,13 +100,13 @@ class ScramblerPermutations:
                         rm = indicator[1]
                         rf = indicator[2]
                         index = lets.index(rs)
-                        rs = self.LETTERS[index]
-                        indicator = indicator[4:10]
-                        groups = self._groups(indicator)
-                        sheet = self._get_sheet(rs, perm_str)
+                        rs = self.LETTERS[index] # ceaser cipher shift on rs
+                        indicator = indicator[4:10] # extract double enciphered message key indicator
+                        groups = self._groups(indicator) # get groups
+                        sheet = self._get_sheet(rs, perm_str) # get sheet data
                         for group in groups:
-                            self._stack_sheet(sheet, rm, rf, group)
-                    self._scan_sheet(perm_str, indicators, self.LETTERS[25-i])
+                            self._stack_sheet(sheet, rm, rf, group) # stack sheets
+                    self._scan_sheet(perm_str, indicators, self.LETTERS[25-i]) # scan sheets for holes
 
     def _groups(self, indicator):
         """

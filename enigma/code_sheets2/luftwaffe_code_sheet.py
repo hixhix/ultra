@@ -1,3 +1,40 @@
+"""
+
+
+LUFTWAFFE ENIGMA
+
+
+Monats-tag |  Walenlage  | Ringstellung | Dora  |      Steckerverbindungen      | zusatzstecker |   Kenngruppen   |
+           |             |              |       |                               | verbindungen  |                 |
+           |             |              |       |                               |   1   |   2   |                 |
+           |             |              |       |                               | 1500  |  2300 |                 |
+-----------|-------------|--------------|-------|-------------------------------|---------------|-----------------|
+    30.    | III  II I   |  17  11  04  | AB CD | AB CD EF GH IJ KL MN OP QR ST |  UV      WX   | KIM PWH SBX CSW |
+-----------|-------------|--------------|       |-------------------------------|---------------|-----------------|
+    29.    | II   I  IV  |  08  17  21  | EF GH | AB CD EF GH IJ KL MN OP QR ST |  UV      WX   | UAQ OMN UME DUF |
+-----------|-------------|--------------|       |-------------------------------|---------------|-----------------|
+    28.    | V  II  III  |  11  14  05  | IJ KL | AB CD EF GH IJ KL MN OP QR ST |  UV      WX   | DON CQO XUM BPG |
+-----------|-------------|--------------|       |-------------------------------|---------------|-----------------|
+    27.    | VI  II  III |  02  20  16  | MN OP | AB CD EF GH IJ KL MN OP QR ST |  UV      WX   | LUI PYG SBY DTQ |
+-----------|-------------|--------------|       |-------------------------------|---------------|-----------------|
+    26.    | II  III  I  |  24  10  01  | QR ST | AB CD EF GH IJ KL MN OP QR ST |  UV      WX   | CMY FQR SCL BUR |
+-----------|-------------|--------------|       |-------------------------------|---------------|-----------------|
+    25.    | I  VI  III  |  15  03  19  | UV WX | AB CD EF GH IJ KL MN OP QR ST |  UV      WX   | KBJ YAQ UDM CNZ |
+-----------|-------------|--------------|       |-------------------------------|---------------|-----------------|
+
+
+Monats-tag |  Walenlage  | Ringstellung | Dora  |      Steckerverbindungen      | zusatzstecker |   Kenngruppen   |
+           |             |              |       |                               | verbindungen  |                 |
+           |             |              |       |                               |   1   |   2   |                 |
+           |             |              |       |                               | 1500  |  2300 |                 |
+-----------|-------------|--------------|-------|-------------------------------|---------------|-----------------|
+    30.    | III  II I   |  17  11  04  | AB CD | AB CD EF GH IJ KL MN OP QR ST |  UV      WX   | KIM PWH SBX CSW |
+    29.    | II   I  IV  |  08  17  21  | EF GH | AB CD EF GH IJ KL MN OP QR ST |  UV      WX   | UAQ OMN UME DUF |
+    28.    | V  II  III  |  11  14  05  | IJ KL | AB CD EF GH IJ KL MN OP QR ST |  UV      WX   | DON CQO XUM BPG |
+    27.    | VI  II  III |  02  20  16  | MN OP | AB CD EF GH IJ KL MN OP QR ST |  UV      WX   | LUI PYG SBY DTQ |
+    26.    | II  III  I  |  24  10  01  | QR ST | AB CD EF GH IJ KL MN OP QR ST |  UV      WX   | CMY FQR SCL BUR |
+    25.    | I  VI  III  |  15  03  19  | UV WX | AB CD EF GH IJ KL MN OP QR ST |  UV      WX   | KBJ YAQ UDM CNZ |
+-----------|-------------|--------------|-------|-------------------------------|---------------|-----------------|
 
 LUFTWAFFE ENCRYPTION/DECRYPTION PROCEDURES
 
@@ -139,6 +176,8 @@ DECRYPTION PROCEDURE
     used to confirm the key sheets daily settings that where used to send the message.
 
 
+
+
 MESSAGE CONSTRUCTION EXAMPLES
 
 ACCORDING TO CODE BREAKERS HINSLEY & STRIP
@@ -170,3 +209,4 @@ TNUFDQ                          -> message setting
 WQSEU PMPIZ TLJJU WQEHG LRBID
 FEWBO JIEPD JAZHT TBJRO AHHYO
 JYG
+"""
