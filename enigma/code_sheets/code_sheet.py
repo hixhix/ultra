@@ -33,6 +33,7 @@ class CodeSheet:
 
     def _make_msg_inds(self):
         msg_inds = CodeSheetData.msg_id_list(self.days)
+        self._record_msg_id_list(msg_inds)
         return CodeSheetTools.msg_id_field(msg_inds, self.args["f_lines"])
 
     def _make_days_elements(self):
@@ -83,7 +84,13 @@ class CodeSheet:
     
     def _make_bigram_table(self):
         bigram_data = CodeSheetData.bigram_dict(self.sc_char_flag)
+        self._sheet_dict["bigram_data"] = bigram_data
         return CodeSheetTools.bigram_table(bigram_data, self.sc_char_flag)
+    
+    def _record_msg_id_list(self, msg_inds):
+        for i in range(self.days):
+            day = self.days - i
+            self._sheet_dict[day]["SETTINGS_ID"] = msg_inds[i]
 
     def _record_reflector_types(self, reflector_types_list):
         for i in range(self.days):

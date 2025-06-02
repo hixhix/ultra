@@ -99,7 +99,7 @@ class ScramblerPermutations:
                         rs = indicator[0]
                         rm = indicator[1]
                         rf = indicator[2]
-                        index = lets.index(rs)
+                        index = lets.index(rs) # get index of rs in lets
                         rs = self.LETTERS[index] # ceaser cipher shift on rs
                         indicator = indicator[4:10] # extract double enciphered message key indicator
                         groups = self._groups(indicator) # get groups

@@ -48,6 +48,7 @@ class KriegsmarineM3CodeSheet(CodeSheet):
         if self.sc_char_flag == "N" and self.pb_char_flag == "N" and self.pb_mode == "U":
             self.args = {"h_lines":3,"f_lines":2,"pb_lines":2}
 
+        ind_header = CodeSheetTools.msg_id_header(self.args["h_lines"])
         days_header = CodeSheetTools.days_header(self.args["h_lines"])
         ref_header = CodeSheetTools.reflector_header(self.args["h_lines"],True)
         rotor_type_header = CodeSheetTools.rotor_types_header(3,self.args["h_lines"])
@@ -60,6 +61,8 @@ class KriegsmarineM3CodeSheet(CodeSheet):
         self.sheet_string = ""
 
         for i in range(len(days_header)):
+            self.sheet_string += "|"
+            self.sheet_string += ind_header[i]
             self.sheet_string += "|"
             self.sheet_string += days_header[i]
             self.sheet_string += "|"
@@ -78,6 +81,7 @@ class KriegsmarineM3CodeSheet(CodeSheet):
             self.sheet_string += "|\n"
     
     def _make_sheet_fields(self):
+        msg_inds = self._make_msg_inds()
         days = self._make_days_elements()
         reflectors = self._make_reflectors_elements()
         rotor_types = self._make_rotor_types_elements()
@@ -86,8 +90,11 @@ class KriegsmarineM3CodeSheet(CodeSheet):
         if self.pb_mode == "U":
             uhr_settings = self._make_uhr_box_settings()
         pb_settings = self._make_plugboard_settings_elements()
+        bigram_table = self._make_bigram_table()
 
         for i in range(len(days)):
+            self.sheet_string += "|"
+            self.sheet_string += msg_inds[i]
             self.sheet_string += "|"
             self.sheet_string += days[i]
             self.sheet_string += "|"
@@ -104,3 +111,5 @@ class KriegsmarineM3CodeSheet(CodeSheet):
                 self.sheet_string += "|"
             self.sheet_string += pb_settings[i]
             self.sheet_string += "|\n"
+        self.sheet_string += "\n"
+        self.sheet_string += bigram_table

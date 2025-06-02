@@ -1,8 +1,17 @@
 
 
+08/05/1940
 
+    First day when partially reconstructed bigram tables and banburismus was used to break the kriegsmarine M3 enigma.
+    At least 200 messages where needed to be eligable for a break.
+
+xx/10/1941
+
+    The kriegsmarine M4 is first used.
 
 XX/01/1944
 
     The UKW-D Reflector was introduced in January 1944 and a variant was used with the Naval Enigma. It was used as an 
     alternative to Reflectors UKW-B and UKW-C.
+    
+
