@@ -5,7 +5,7 @@ from enigma_cli.zygalski_sheets_cli.ceaser_cipher_shift_cli import CeaserCipherS
 from enigma_cli.zygalski_sheets_cli.zygalski_sheet_cli import ZygalskiSheetCli
 from enigma_cli.zygalski_sheets_cli.permutation_filter_cli import PermutationsFilterCli
 from enigma_cli.zygalski_sheets_cli.sheet_catalog_cli import SheetCatalogCli
-
+from argparse import RawTextHelpFormatter
 # zygalski sheets
     #    svg zygalsi sheets
     #    svg zygalski sheets solution
@@ -18,6 +18,7 @@ class ZygalskiSheetsCli:
 
     def __init__(self, parser):
         self.parser = parser
+        self._add_description()
         self._add_sub_parsers()
 
     def process_args(self, args):
@@ -44,6 +45,14 @@ class ZygalskiSheetsCli:
 
         elif args['sheets'] == 'zygalski_catalog':
             self._wehrmacht_catalog_cli.process_args(args)
+
+    def _add_description(self):
+        """
+
+        """
+        self.parser.formatter_class = RawTextHelpFormatter
+        self.parser.description = (f"Can create the zygalski sheet catalog which allows for the creation of indicators which can be used to filter scrambler permutations.\n"
+                                   f"Filtered permutations can be used to create zygalski sheets.\n\n")
 
     def _add_sub_parsers(self):
         """

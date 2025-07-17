@@ -2,19 +2,22 @@ from enigma_cli.cyclometer_cli.generate_indicators_cli import GenerateIndicators
 from enigma_cli.cyclometer_cli.find_loops_cli import FindLoopsCli
 from enigma_cli.cyclometer_cli.filter_permutations_cli import FilterPermutationsCli
 from enigma_cli.cyclometer_cli.make_catalog_cli import MakeCatalogCli
+from argparse import RawTextHelpFormatter
+
 
 class CyclometerCli:
 
     def __init__(self, parser):
         """
-        
+
         """
         self._parser = parser
+        self._add_description()
         self._add_parser_arguments()
 
     def process_args(self, args):
         """
-        
+
         """
         if args['cyclometer'] == 'generate_indicators':
             self._generate_indicators_cli.process_args(args)
@@ -24,6 +27,16 @@ class CyclometerCli:
             self._filter_permutations_cli.process_args(args)
         elif args['cyclometer'] == 'catalog_menu':
             self._catalog_cli.process_args(args)
+
+    def _add_description(self):
+        """
+
+        """
+        self._parser.formatter_class=RawTextHelpFormatter
+
+        self._parser.description = (
+            f"Can create a cyclometer catalog which allows for the generation of indicators which can then\n"
+            f"be used to find cyclometer loops which in turn can be used to filter scrambler permutations.")
 
     def _add_parser_arguments(self):
         subparsers = self._parser.add_subparsers(dest='cyclometer')

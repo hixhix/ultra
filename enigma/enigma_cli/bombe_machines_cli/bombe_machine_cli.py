@@ -1,45 +1,7 @@
 from bombe_machines.bombe_machine import BombeMachine
 import multiprocessing
+from argparse import RawTextHelpFormatter
 
-"""
-class TuringWelchmanBombeCli:
-
-    LETTERS = [chr(i) for i in range(65, 91)]
-    NUMBERS = [f"{i+1}".rjust(2, '0') for i in range(26)]
-
-    def __init__(self, parser):
-        self._parser = parser
-        self._add_parser_arguments()
-
-    def run_bombe(self, plain_text, cipher_text, permutation):
-        turing_bombe = TuringBombe(plain_text, cipher_text, permutation)
-        turing_bombe.solve()
-
-    def process_args(self, args):
-        plain_text = args["plain_text"]
-        cipher_text = args["cipher_text"]
-        perm_file_path = args["permutations"]
-
-        with open(perm_file_path, "r") as f:
-            perms = f.readlines()
-
-        perms = [line.strip() for line in perms]
-        
-        processes = []
-
-        for perm in perms:
-            p = multiprocessing.Process(target=self.run_bombe, args=[plain_text, cipher_text, perm])
-            p.start()
-            processes.append(p)
-
-        for process in processes:
-            process.join()
-
-    def _add_parser_arguments(self):
-        self._parser.add_argument('plain_text', type=str, help='The assumed plain text')
-        self._parser.add_argument('cipher_text', type=str, help='The cipher text')
-        self._parser.add_argument('permutations', type=str, help='The scrambler permutation file')
-"""
 
 class BombeMachineCli:
 
@@ -48,6 +10,7 @@ class BombeMachineCli:
 
     def __init__(self, parser):
         self._parser = parser
+        self._add_description()
         self._add_parser_arguments()
 
     def run_bombe(self, plain_text, cipher_text, permutation, machine_type, csko_flag, diagonal_board_flag):
@@ -75,7 +38,7 @@ class BombeMachineCli:
             perms = f.readlines()
 
         perms = [line.strip() for line in perms]
-        
+
         processes = []
 
         for perm in perms:
@@ -86,9 +49,14 @@ class BombeMachineCli:
         for process in processes:
             process.join()
 
+    def _add_description(self):
+        self._parser.formatter_class = RawTextHelpFormatter
+        self._parser.description = (f"Provides a simulation of a turing bombe and naval bombe machines.\n"
+                                    f"Additional features include consecutive stecker knockout and the ability to disable the diagonal board.\n\n")
+
     def _add_parser_arguments(self):
         """
-        
+
         """
         self._parser.add_argument('plain_text', type=str, help='The assumed plain text')
         self._parser.add_argument('cipher_text', type=str, help='The cipher text')

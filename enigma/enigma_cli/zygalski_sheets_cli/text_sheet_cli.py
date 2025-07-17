@@ -1,7 +1,7 @@
 from enigma_core.validators.scrambler_validators.scrambler_validators import ScramblerValidators, PermutationError
 from zygalski_sheets.sheet_data import SheetDataGenerator
 from zygalski_sheets.zygalski_sheets_text.text_sheet import TextZygalskiSheet
-from argparse import ArgumentError
+from argparse import ArgumentError, RawTextHelpFormatter
 import re
 
 
@@ -9,11 +9,12 @@ class TextSheetCli:
 
     def __init__(self, parser):
         self._parser = parser
+        self._add_description()
         self._add_arguments()
 
     def process_args(self, args):
         """
-        
+
         """
         perm_str = args["permutation"]
 
@@ -59,9 +60,30 @@ class TextSheetCli:
             text_sheet = text_sheet_generator.text_sheet(groups, "N", charset, sheet_data, True)
             print(text_sheet)
 
+    def _add_description(self):
+        self._parser.formatter_class = RawTextHelpFormatter
+        self._parser.description = (f"Produces a zygalski sheet in text format using the provided enigma machine type and scrambler permutation.\n"
+                                    f"The optional groups argument allows control over the numerical value to be displayed in the zygalski sheet.\n"
+                                    f"The numerical value that appears at each position in the zygalski sheet is the sum of numbers that repressent\n"
+                                    f"each group.\n"
+                                    f"\n"
+                                    f"Group   Number\n"
+                                    f"1       1\n"
+                                    f"2       2\n"
+                                    f"3       4\n"
+                                    f"\n"
+                                    f"Groups  Sum\n"
+                                    f"1       1\n"
+                                    f"2       2\n"
+                                    f"12      3\n"
+                                    f"3       4\n"
+                                    f"13      5\n"
+                                    f"23      6\n"
+                                    f"123     7\n\n")
+
     def _add_arguments(self):
         """
-        
+
         """
         self._parser.add_argument('machine_type', type=self._valid_machine_type, help='Machine type "WEHRMACHT early" or "WEHRMACHT late"')
         self._parser.add_argument(

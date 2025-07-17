@@ -12,6 +12,7 @@ class RingSettingsOptomizerCli:
 
     def __init__(self, parser):
         self._parser = parser
+        self._add_parser_description()
         self._add_parser_arguments()
 
     def process_args(self, args):
@@ -53,10 +54,10 @@ class RingSettingsOptomizerCli:
             "plugboard_mode":"S",
             "plugboard_connections":pb_conns
         }
-       
+
         optomizer = RingSettingsOptomizer(cipher_text, settings, start_core_positions)
         ring_settings = optomizer.solve()
-        
+
         add_newline = False
 
         settings_str = "ROTOR_SETTINGS  RING_SETTINGS   IOC     BIGRAM_COUNT    TRIGRAM_COUNT\n"
@@ -83,7 +84,7 @@ class RingSettingsOptomizerCli:
     @staticmethod
     def _valid_machine(machine_type):
         """
-        
+
         """
         machines_list = machine_list()
 
@@ -93,7 +94,7 @@ class RingSettingsOptomizerCli:
     @staticmethod
     def _valid_permutation(permutation, machine_type):
         """
-        
+
         """
         try:
             perm = ScramblerValidators.valid_permutation_string(machine_type, permutation, rs_flag=True, group_flag=True)
@@ -112,10 +113,18 @@ class RingSettingsOptomizerCli:
             err_msg = f"Permutation {permutation} is not a valid permutation."
             raise PermutationError(err_msg)
 
+    def _add_parser_description(self):
+        """
+
+        """
+        _str = "The ring optomizer module optomizes the ring settings based on bigram, trigram count and index of coincidence."
+
+        self._parser.description = _str
+
     def _add_parser_arguments(self):
         # permutation start_core_positions plugboard_settings cipher_text_file
-        self._parser.add_argument('permutation',type=str,help='the scrambler permutation')
-        self._parser.add_argument('machine',type=str,help='the enigma machine type')
-        self._parser.add_argument('start_positions',type=str,help='rotor start positions')
-        self._parser.add_argument('plugboard_settings',type=str,help='plugboard settings')
-        self._parser.add_argument('cipher_text_file',type=str,help='cipher text file path')
+        self._parser.add_argument('permutation',type=str,help='The scrambler permutation in format "A UKW-B III II I G3"')
+        self._parser.add_argument('machine',type=str,help='The enigma machine type ( WEHRMACHT early | WEHRMACHT late | LUFTWAFFE | Kriegsmarine M3 | Kriegsmarine M4 )')
+        self._parser.add_argument('start_positions',type=str,help='Rotor start positions in format "RS,RM,RF"')
+        self._parser.add_argument('plugboard_settings',type=str,help='Plugboard settings in format "AB,CD,EF,GH,IJ,KL,MN,OP,QR,ST"')
+        self._parser.add_argument('cipher_text_file',type=str,help='Cipher text file path')

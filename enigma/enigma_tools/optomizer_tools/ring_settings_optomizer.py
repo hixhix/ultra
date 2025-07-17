@@ -27,7 +27,7 @@ class RingSettingsOptomizer:
 
     def __init__(self, machine_type, cipher_text, settings, start_settings, verbose=False):
         """
-        
+
         """
         self._machine_type = machine_type
         self._cipher_text = cipher_text
@@ -44,7 +44,7 @@ class RingSettingsOptomizer:
 
     def solve(self):
         """
-        
+
         """
         while True:
             self._set_settings()
@@ -65,7 +65,7 @@ class RingSettingsOptomizer:
 
     def _make_translations(self):
         """
-        
+
         """
         for position in ["RS","RM","RF"]:
             lets = deque(self.LETTERS)
@@ -75,7 +75,7 @@ class RingSettingsOptomizer:
 
     def _check_text(self, text):
         """
-        
+
         """
         ioc = index_of_coincidence(text)
         _bigram_count = bigram_count(text)
@@ -115,7 +115,7 @@ class RingSettingsOptomizer:
 
     def _set_settings(self):
         """
-        
+
         """
         rotor_settings = self._rotor_settings.settings
 
@@ -136,7 +136,7 @@ class RingSettingsOptomizer:
 
     def _make_start_ring_settings(self):
         """
-        
+
         """
         positions = ["RS","RM","RF"]
         ring_settings = {}

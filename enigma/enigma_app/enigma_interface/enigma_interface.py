@@ -182,7 +182,7 @@ class EnigmaInterface:
                 self._make_code_sheet()
         elif not self._code_sheet:
             self._make_code_sheet()
-        
+
         menu_str = "Enter the day to set the machine settings to or q to quit.\n"
 
         loop = False
@@ -194,7 +194,7 @@ class EnigmaInterface:
             if loop:
                 print("Invalid input!. Try again.")
             loop = True
-            
+
             inpt = input(menu_str)
 
             if inpt.upper() == "Q":
@@ -215,7 +215,7 @@ class EnigmaInterface:
 
     def _show_procedure(self):
         """
-        
+
         """
         if self._enigma_obj.machine_type == "WEHRMACHT early":
             procedure_fname = "wehrmacht_early.txt"
@@ -246,7 +246,7 @@ class EnigmaInterface:
 
     def _make_code_sheet(self, dora_flag=False):
         """
-        
+
         """
         sc_char_flag = self._enigma_obj.scrambler.character_set_flag
         pb_char_flag = self._enigma_obj.plugboard.character_set_flag
@@ -266,7 +266,7 @@ class EnigmaInterface:
 
     def _character_set_menu(self):
         """
-        
+
         """
         menu_str1 = (
             f"Enter a numer to select an option.\n"
@@ -357,17 +357,17 @@ class EnigmaInterface:
             if inpt:
                 outp = self._convert_input(inpt)
                 print(outp)
-    
+
     def _get_user_input(self):
         """
-        
+
         """
         clear_terminal()
         menu_str = (f"Enter a number to select an option.\n"
                     f"1. User input from terminal.\n"
                     f"2. user input from text file.\n"
                     f"3. Return to previous menu.\n")
-        
+
         input_text = None
 
         while True:
@@ -389,19 +389,19 @@ class EnigmaInterface:
 
     def _get_terminal_input(self):
         """
-        
+
         """
         clear_terminal()
         inpt = input("Enter text to be converted.\n")
 
         return inpt.upper()
-    
+
     def _get_text_file_input(self):
         """
-        
+
         """
         clear_terminal()
-        
+
         while True:
             fpath = input("Enter the input text file name.\n")
 
@@ -460,7 +460,7 @@ class EnigmaInterface:
 
     def _load_save_settings(self):
         """
-        
+
         """
         menu_str = (
             f"Enter a number to select an option.\n"
@@ -483,10 +483,10 @@ class EnigmaInterface:
 
                     with open(fpath, "w+") as f:
                         json.dump(settings, f)
-                    
+
                     print("Settings have been saved.")
                 else:
-                    print("The machine setup is not complete")                        
+                    print("The machine setup is not complete")
                 break
             elif inpt == '2':
                 dirpath = os.path.dirname(__file__)

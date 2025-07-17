@@ -12,6 +12,7 @@ class GenerateIndicatorsCli:
         self._wehrmacht_early_data = None
         self._wehrmacht_late_data = None
         self._load_machine_data()
+        self._add_description()
         self._add_parser_arguments()
 
     def process_args(self, args):
@@ -30,7 +31,7 @@ class GenerateIndicatorsCli:
 
         indicators = generate_indicators(settings, number)
         for indicator in indicators:
-            print(indicator)        
+            print(indicator)
 
     def _load_machine_data(self):
         machine_obj = make_machine("WEHRMACHT early")
@@ -38,6 +39,18 @@ class GenerateIndicatorsCli:
 
         machine_obj = make_machine("WEHRMACHT late")
         self._wehrmacht_late_data = machine_obj.scrambler.collection.collection_dict()
+
+    def _add_description(self):
+        """
+
+        """
+        self.parser.description = (
+            f"Allows for the creation of six character indicators.\n"
+            f"The following enigma machines are simulated.\n"
+            f"\n"
+            f"WEHRMACHT early\n"
+            f"WEHRMACHT late\n")
+
 
     def _add_parser_arguments(self):
         self.parser.add_argument('machine_type', type=self._valid_machine_type, help='Machine type "WEHRMACHT early" or "WEHRMACHT late"')

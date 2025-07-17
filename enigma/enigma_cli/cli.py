@@ -102,7 +102,7 @@ def enigma_cli(argv=None):
 
     elif args['command'] == 'bombe_machine':
         bombe_machine_cli.process_args(args)
-    
+
     elif args['command'] == 'ring_optomizer':
         ring_settings_optomizer_cli.process_args(args)
 

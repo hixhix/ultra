@@ -1,5 +1,5 @@
 from enigma_tools.optomizer_tools.plugboard_optomizer import PlugboardOptomizer
-from argparse import ArgumentError
+from argparse import ArgumentError, RawDescriptionHelpFormatter
 import json
 import os
 
@@ -59,11 +59,19 @@ class PlugboardOptomizerCli:
         print(optomizer_str)
 
     def _add_parser_arguments(self):
-        self._parser.add_argument('text_file',type=self._valid_file_path,help='The file path for the data file')
+        self._parser.formatter_class = RawDescriptionHelpFormatter
+        self._parser.description = (f'The file path for the json file. Contents of the data file must be as follows\n'
+                    f'{{\n'
+                    f'    "PLAIN_TEXT":"TOTHEPRESIDENTOFTHEUNITEDSTATESOFAMERICA"\n'
+                    f'    "CIPHER_TEXT":"NFGUCWQXJNQWYJWQDXBKTYVYGFNZLMYHLMXLYFEO"\n'
+                    f'    "INTERMEDIARY_TEXT":"TSMFHPRAKKBGNYOHMFWZNKTGDSTCPGSVNCMVRYHC"\n'
+                    f'}}')
+
+        self._parser.add_argument('text_file',type=self._valid_file_path,help=f'The file path for the json file')
 
     def _valid_file_path(self, file_path):
         """
-        
+
         """
         if os.path.isfile(file_path):
             self._file_path = file_path

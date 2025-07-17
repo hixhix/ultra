@@ -18,6 +18,7 @@ class CodeSheetsCli:
         self._pb_char_flag = None
         self._pb_mode = None
         self._output_file_path = None
+        self._add_description()
         self._add_parser_arguments()
 
     def process_args(self, args):
@@ -40,10 +41,10 @@ class CodeSheetsCli:
                 f.write(sheet_str)
         else:
             print(sheet_str)
-        
+
     def _valid_output_file(self, args):
         """
-        
+
         """
         output_file = args['output_file']
         if output_file:
@@ -52,9 +53,20 @@ class CodeSheetsCli:
                 raise Exception(f"{dirpath} is not a valid output directory path.")
             self._output_file_path = output_file
 
+    def _add_description(self):
+        """
+
+        """
+        self._parser.description = (
+            f"Allows for the creation of enigma machine code sheets.\n"
+            f"The scrambler and plugboard settings can be configured seperatly to use letters or numbers.\n"
+            f"The plugboard settings can be configured for a standard plugboard that uses stecker cables or alternativly to use an uhr box attachment.\n"
+            f"A rewireable dora reflector UKW-D is simulated for the luftwaffe enigma machine.\n")
+
+
     def _add_parser_arguments(self):
         """
-        
+
         """
         self._add_machine_arg()
         self._add_scrambler_char_flag_arg()
@@ -101,7 +113,7 @@ class CodeSheetsCli:
 
     def _valid_machine_type(self, machine):
         """
-        
+
         """
         try:
             machine = MachineValidators.valid_enigma_machine(machine)
@@ -110,7 +122,7 @@ class CodeSheetsCli:
         else:
             self._machine_type = machine
             return machine
-        
+
     def valid_scrambler_char_flag(self, v):
         if v.upper() in ["L","N"]:
             v = v.upper()
@@ -118,7 +130,7 @@ class CodeSheetsCli:
             return v
         else:
             raise argparse.ArgumentError(f"Invalid scrambler char flag {v}. 'L' or 'N' expected")
-        
+
     def valid_plugboard_char_flag(self, v):
         if v.upper() in ["L","N"]:
             v = v.upper()
@@ -126,7 +138,7 @@ class CodeSheetsCli:
             return v
         else:
             raise argparse.ArgumentError(f"Invalid plugboard char flag {v}. 'L' or 'N' expected")
-        
+
     def valid_plugboard_mode(self, v):
         if v.upper() in ["S","U"]:
             v = v.upper()
@@ -134,10 +146,10 @@ class CodeSheetsCli:
             return v
         else:
             raise argparse.ArgumentError(f"Invalid plugboard mode {v}. 'S' or 'U' expected")
-        
+
     def valid_output_file(self, args):
         """
-        
+
         """
         output_file = args['output_file']
         if output_file:

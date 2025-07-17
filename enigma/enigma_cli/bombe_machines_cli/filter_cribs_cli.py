@@ -1,4 +1,5 @@
 from bombe_machines.filter_cribs import FilterCribs
+from argparse import RawTextHelpFormatter
 import os
 
 
@@ -9,6 +10,7 @@ class FilterCribsCli:
 
     def __init__(self, parser):
         self._parser = parser
+        self._add_description()
         self._add_parser_arguments()
 
     def process_args(self, args):
@@ -17,7 +19,7 @@ class FilterCribsCli:
 
         if not os.path.isfile(cipher_text_filepath):
             raise Exception(f"{cipher_text_filepath} is not a valid file path")
-        
+
         with open(cipher_text_filepath, "r") as f:
             cipher_text = f.read()
 
@@ -54,9 +56,16 @@ class FilterCribsCli:
 
         print(results_str)
 
+    def _add_description(self):
+        self._parser.formatter_class = RawTextHelpFormatter
+        self._parser.description = (f"The plain text string will be alligned with each position in the cipher string and will filter the parts\n"
+                                    f"of the cipher text where none of the characters in the plain text are the same as there alligned characters in the plain text.\n"
+                                    f"The filtered parts of the cipher text would later be used to create menus for the bombe machines.\n"
+                                    f"The cipher text must be longer than the plain text.\n\n")
+
     def _add_parser_arguments(self):
         """
-        
+
         """
         self._parser.add_argument('cipher_text_filepath', type=str, help='The cipher text')
         self._parser.add_argument('plain_text', type=str, help='The plain text to find the cribs')

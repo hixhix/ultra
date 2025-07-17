@@ -4,6 +4,7 @@ from argparse import ArgumentError, RawTextHelpFormatter
 from zygalski_sheets.generate_indicators import generate_indicators
 from zygalski_sheets.filter_indicators import filter_females
 from enigma_core.factory import make_machine
+from argparse import RawTextHelpFormatter
 
 
 class IndicatorsGeneratorCli:
@@ -13,6 +14,7 @@ class IndicatorsGeneratorCli:
         self._wehrmacht_early_data = None
         self._wehrmacht_late_data = None
         self._load_machine_data()
+        self._add_description()
         self._add_parser_arguments()
 
     def process_args(self, args):
@@ -34,7 +36,7 @@ class IndicatorsGeneratorCli:
             for indicator in indicators:
                 print(indicator)
         else:
-            self._filter_indicators(args) 
+            self._filter_indicators(args)
 
     def _load_machine_data(self):
         machine_obj = make_machine("WEHRMACHT early")
@@ -47,9 +49,9 @@ class IndicatorsGeneratorCli:
         file_path = args['indicators_file']
         with open(file_path, 'r') as f:
             indicators = f.read()
-        
+
         indicators = indicators.split('\n')
-                
+
         indicators = [indicator for indicator in indicators if len(indicator) == 10]
 
         filtered = filter_females(indicators)
@@ -66,9 +68,18 @@ class IndicatorsGeneratorCli:
         for indicator in filtered:
             print(indicator)
 
+    def _add_description(self):
+        self.parser.formatter_class = RawTextHelpFormatter
+        self.parser.description = "Allows for the creation and filtering of indicators."
+
     def _add_parser_arguments(self):
         subparsers = self.parser.add_subparsers(dest='indicators')
         generate_traffic = subparsers.add_parser('generate_indicators', help='generates indicators', formatter_class=RawTextHelpFormatter)
+        generate_traffic.description = (f"Allows for the creation of indicators from enigma machine types WEHRMACHT early and WEHRMACHT late.\n"
+                                        f"The -f flag if provided will produce indicators that will be representative of the days first ring\n"
+                                        f"settings where due to human factors and operator error the distribution of the inital rotor settings\n"
+                                        f"will not be as random as the rest of the day allowing for the herival tip to be used to get that days\n"
+                                        f"ring settings.\n\n")
         generate_traffic.add_argument('machine_type', type=self._valid_machine_type, help='Machine type "WEHRMACHT early" or "WEHRMACHT late"')
         ref_str = (f"WEHRMACHT early ( {' | '.join(self._wehrmacht_early_data['REFLECTORS'])} )\n"
                    f"WEHRMACHT late ( {' | '.join(self._wehrmacht_late_data['REFLECTORS'])} )\n")
@@ -82,6 +93,8 @@ class IndicatorsGeneratorCli:
         generate_traffic.add_argument('-f',action='store_true',help='creates days first settings that contain Herivel tips')
 
         filter_traffic = subparsers.add_parser('filter_indicators', help='filters females from indicators', formatter_class=RawTextHelpFormatter)
+        filter_traffic.description = (f"Allows for females to be filtered from an indicators file. The -u unique slow rotor flag if used will\n"
+                                      f"return a set filtered females where the slow rotor setting is not repeated in the set.\n\n")
         filter_traffic.add_argument('indicators_file', type=str, help='indicators file path')
         filter_traffic.add_argument('-u', '--unique_slow_rotors', action='store_true', help='return indicators with unique slow rotor characters')
 

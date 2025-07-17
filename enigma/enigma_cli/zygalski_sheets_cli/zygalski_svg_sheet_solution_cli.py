@@ -1,16 +1,17 @@
 from zygalski_sheets.zygalski_sheets_svg.svg_sheet_solution import ZygalskiSheetSolution
-from argparse import ArgumentError
+from argparse import ArgumentError, RawTextHelpFormatter
 
 
 class ZygalskiSheetSVGSolutionCli:
 
     def __init__(self, parser):
         self._parser = parser
+        self._add_description()
         self._add_parser_arguments()
 
     def process_args(self, args):
         """
-        
+
         """
         indicators_file = args["indicators_file"]
         permutation = args["permutation"]
@@ -32,9 +33,16 @@ class ZygalskiSheetSVGSolutionCli:
         with open(out_file, "w") as f:
             f.write(solution_svg)
 
+    def _add_description(self):
+        """
+
+        """
+        self._parser.formatter_class = RawTextHelpFormatter
+        self._parser.description = (f"Generates a zygalski sheet solution in svg format.\n\n")
+
     def _add_parser_arguments(self):
         """
-        
+
         """
         self._parser.add_argument('machine_type', type=self._valid_machine_type, help='Machine type "WEHRMACHT early" or "WEHRMACHT late"')
         self._parser.add_argument('indicators_file', type=str, help='The indicators file path.')

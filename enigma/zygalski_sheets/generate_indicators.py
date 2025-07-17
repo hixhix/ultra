@@ -49,7 +49,7 @@ def generate_indicators(machine_type, settings, number, herivel=False):
         rotor_settings = {
             "RS":rot_settings[0],
             "RM":rot_settings[1],
-            "RF":rot_settings[2]    
+            "RF":rot_settings[2]
         }
 
         settings["SCRAMBLER_SETTINGS"]["ROTOR_SETTINGS"] = rotor_settings
@@ -57,7 +57,7 @@ def generate_indicators(machine_type, settings, number, herivel=False):
         machine.settings = settings
 
         inpt = ""
-        
+
         letters = LETTERS.copy()
         random.shuffle(letters)
 

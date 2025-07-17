@@ -2,14 +2,22 @@ from enigma_core.validators.scrambler_validators.scrambler_validators import Scr
 from zygalski_sheets.sheet_data import SheetDataGenerator
 from zygalski_sheets.zygalski_sheets_svg.svg_sheet import SVGZygalskiSheet
 from zygalski_sheets.zygalski_sheets_svg.svg_sheet_short import SVGZygalskiSheetShort
-from argparse import ArgumentError
+from argparse import ArgumentError, RawTextHelpFormatter
 
 
 class SvgSheetCli:
 
     def __init__(self, parser):
         self._parser = parser
+        self._add_description()
         self._add_parser_arguments()
+
+    def _add_description(self):
+        """
+
+        """
+        self._parser.formatter_class = RawTextHelpFormatter
+        self._parser.description = (f"Produces a zygalski sheet in svg format using the provided enigma machine type and scrambler permutation.\n\n")
 
     def process_args(self, args):
         perm_str = args["permutation"]

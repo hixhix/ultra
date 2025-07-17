@@ -32,6 +32,7 @@ class CommandLineEnigmaCli:
         self._output_file_path = None
         self._message = None
         self._load_machine_data()
+        self._add_description()
         self._add_parser_arguments()
 
     def process_args(self, args):
@@ -230,6 +231,23 @@ class CommandLineEnigmaCli:
             machine_obj = make_machine(machine)
             self._machine_data[machine] = machine_obj.scrambler.collection.collection_dict()
 
+    def _add_description(self):
+        """
+
+        """
+        self._parser.description = (f"Provides an accurate command line simulation of a selection of enigma machines.\n"
+                                    f"The following enigma machines are simulated.\n"
+                                    f"\n"
+                                    f"1. WEHRMACHT early\n"
+                                    f"2. WEHRMACHT late\n"
+                                    f"3. LUFTWAFFE\n"
+                                    f"4. Kriegsmarine M3\n"
+                                    f"5. Kriegsmarine M4\n"
+                                    f"\n"
+                                    f"Although not historicaly accurate the following functionality is provided to all enigma machine types.\n"
+                                    f"It is possible to seperatly configure the scrambler and plugboard to use letters or numbers.\n"
+                                    f"The plugboard can be configured as a standard plugboard that uses stecker cables or alternativly to use an uhr box attachment.\n\n")
+
     def _add_parser_arguments(self):
         """
 
@@ -296,7 +314,7 @@ class CommandLineEnigmaCli:
             rotors_dynamic = self._machine_data[machine]["ROTORS_DYNAMIC"]
             rotors_static_str = " | ".join(rotors_static)
             rotors_dynamic_str = ", ".join(rotors_dynamic)
-            rotor_strs[machine] = (f"( {rotors_static_str} )".ljust(17, ' ') 
+            rotor_strs[machine] = (f"( {rotors_static_str} )".ljust(17, ' ')
 	                         + f" [{rotors_dynamic_str}]")
 
         rot_strs = "\n"

@@ -28,6 +28,17 @@ def enigma_app():
     machines = machine_list()
 
     menu_str = (
+        f"Provides accurate interactive simulation of a selection of enigma machines.\n"
+        f"Although not historicaly accurate the following functionality is provided to all enigma machine types.\n"
+        f"It is possible to seperatly configure the scrambler and plugboard to use letters or numbers.\n"
+        f"The plugboard can be configured as a standard plugboard that uses stecker cables or alternativly to use an uhr box attachment.\n"
+        f"\n"
+        f"A setup procedure is provided for each unique enigma machine type.\n"
+        f"\n"
+        f"Additional functionality includes a code sheet feature that can be used to setup the enigma machine.\n"
+        f"The code sheets configuration reflects the enigma machines current configuration such as alpha numeric settings and plugboard mode.\n"
+        f"\n"
+        f"\n"
         f"Enter a number to select a machine."
     )
 

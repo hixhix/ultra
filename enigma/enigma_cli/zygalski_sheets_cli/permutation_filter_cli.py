@@ -2,7 +2,7 @@ from zygalski_sheets.filter_indicators import filter_females
 from zygalski_sheets.scrambler_permutations import ScramblerPermutations
 from argparse import ArgumentError
 
-        
+
 class PermutationsFilterCli:
 
     def __init__(self, parser):
@@ -18,13 +18,13 @@ class PermutationsFilterCli:
             indicators_str = f.read()
 
         indicators = indicators_str.split('\n')
-        
+
         indicators = [indicator for indicator in indicators if len(indicator) == 10]
-        
+
         indicators = filter_females(indicators)
-        
+
         sp = ScramblerPermutations()
-        
+
         permutations = sp.solve(self._machine_type, indicators, verbose_flag)
 
         perm_str = "\n"
@@ -41,6 +41,15 @@ class PermutationsFilterCli:
                 perm_str += f"{indicator}\n"
 
         print(perm_str)
+
+    def _add_description(self):
+        """
+
+        """
+        self._parser.formatter_class = RawTextHelpFormatter
+        self._parser.description = (f"Produces a herivel square from an indicators file.\n"
+                                    f"In order for the herivel square to work correctly the indicators file needs to have been generated using\n"
+                                    f"the -f flag to generate the first days settings.\n\n")
 
     def _add_arguments(self):
         self._parser.add_argument('machine_type', type=self._valid_machine_type, help='Machine type "WEHRMACHT early" or "WEHRMACHT late"')
